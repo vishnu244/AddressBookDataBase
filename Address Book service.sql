@@ -60,3 +60,6 @@ update AddressBook set ContactType='Profession' where LastName='Pabboji';
 update AddressBook set ContactType='Family' where LastName='Nali';
 update AddressBook set ContactType='Profession,' where LastName='Mallapururam';
 Select * from AddressBook;
+
+--------UC10-get count by ContactType---------------------
+select Count(ContactType) from AddressBook;
