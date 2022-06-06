@@ -52,3 +52,11 @@ Select * from AddressBook order by FirstName ASC;
 Select * from AddressBook order by FirstName DESC;
 Select * from AddressBook where City = 'Old Alwal' order by LastName ASC;
 Select * from AddressBook where City = 'Vijayawada' order by LastName ASC;
+
+-------UC9 - Add ContactType------------
+Alter table AddressBook add ContactType varchar(100);
+update AddressBook set ContactType='Friend' where LastName='Reddy';
+update AddressBook set ContactType='Profession' where LastName='Pabboji';
+update AddressBook set ContactType='Family' where LastName='Nali';
+update AddressBook set ContactType='Profession,' where LastName='Mallapururam';
+Select * from AddressBook;
