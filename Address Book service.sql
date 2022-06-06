@@ -28,3 +28,8 @@ Select * from AddressBook;
 
 update AddressBook set Address='currency Colony' where FirstName='Shravanthi';
 update AddressBook set Address='Kanuru' where FirstName='Vishnu'
+
+---------UC5 - Delete Contact using name-----------
+Insert into AddressBook Values ('abc','xyz','ABC Colony','Temple Alwal','Telangana',500010,'9000000005','abc@gmail.com');
+
+Delete From AddressBook where FirstName = 'abc';
