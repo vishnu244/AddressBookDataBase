@@ -63,3 +63,9 @@ Select * from AddressBook;
 
 --------UC10-get count by ContactType---------------------
 select Count(ContactType) from AddressBook;
+
+-------UC11 - add same person to frnd and family---------
+
+Insert into AddressBook Values ('raju','nali','kanuru','Vijayawada','Andhra Pradesh',500012,'9000000006','raju@gmail.com','Family'),
+('Sai','Allu','Mahan Colony','Gannavaram','Andhra',500019,'9000000009','Sai@gmail.com','Friend');
+Select * from AddressBook;
