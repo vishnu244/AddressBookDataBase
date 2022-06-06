@@ -33,3 +33,9 @@ update AddressBook set Address='Kanuru' where FirstName='Vishnu'
 Insert into AddressBook Values ('abc','xyz','ABC Colony','Temple Alwal','Telangana',500010,'9000000005','abc@gmail.com');
 
 Delete From AddressBook where FirstName = 'abc';
+
+--------UC6 - Retrieve person or contact belonging to particular state or city-------------
+
+Select * from AddressBook where City ='Temple Alwal' or State ='Telangana';
+Select * from AddressBook where City ='Vijayawada';
+Select * from AddressBook where State ='Kerala';
