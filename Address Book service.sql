@@ -73,11 +73,11 @@ Select * from AddressBook;
 
 --------------UC12-Creating table using ER Diagram-------------------
 
-Create table Address_Book(AddressBookId Int Identity(1,1) Primary Key,
+Create table Address_Book1(AddressBookId Int Identity(1,1) Primary Key,
 						  AddressBookName varchar(100));
 
-Create table PersonDetail(   PersonId Int Identity(1,1) Primary Key,
-							 AddressBookId Int Foreign Key References Address_Book(AddressBookId),
+Create table PersonDetail1(   PersonId Int Identity(1,1) Primary Key,
+							 AddressBookId Int Foreign Key References Address_Book1(AddressBookId),
 							 FirstName varchar(50),
 							 LastName varchar(50),
 							 Address varchar(100),
@@ -87,30 +87,88 @@ Create table PersonDetail(   PersonId Int Identity(1,1) Primary Key,
 							 PhoneNumber bigint,
 							 Email_ID varchar(50)    );
 
-CREATE table PersonTypes(	 PersonTypeId Int Identity(1,1) Primary Key,
+CREATE table PersonTypes1(	 PersonTypeId Int Identity(1,1) Primary Key,
 							 PersonType varchar(50), );
 
 
-CREATE table PersonsDetail_Type(PersonId Int Foreign Key References PersonDetail(PersonId),
-								PersonTypeId Int Foreign Key References PersonTypes(PersonTypeId),
-								EmployeeID Int Primary Key );
+CREATE table PersonsDetail_Type1(PersonId Int Foreign Key References PersonDetail1(PersonId),
+								PersonTypeId Int Foreign Key References PersonTypes1(PersonTypeId)  );
 
 
-CREATE table Employee_Department(PersonId Int Foreign Key References PersonDetail(PersonId),
+CREATE table Employee_Department1(PersonId Int Foreign Key References PersonDetail1(PersonId),
 								EmployeeID Int  ,
 								DepartmentID int,);
 
 				
-select *from Address_Book;
-select *from PersonDetail;
-select *from PersonTypes;
-select *from PersonsDetail_Type;
-select *from Employee_Department;
+select *from Address_Book1;
+select *from PersonDetail1;
+select *from PersonTypes1;
+select *from PersonsDetail_Type1;
+select *from Employee_Department1;
 
 
+-------------Inserting values into Address_Book1 table---------------------------------
+INSERT INTO Address_Book1(AddressBookName) Values('Home'),('School'),('College'),('Office');
+
+select *from Address_Book1;
 
 
+------------Insert values in PersonDetail1 table-------------
+Insert INTO PersonDetail1 VALUES(1,'Ram','Krishna','Poranki','Gudivada','Andhra Pradesh',520001,1234567890,'Ram@gmail.com'),
+								(2,'sai','Gupta','AyyappaNagar','Vijayawada','Karnataka',520002,1234567891,'sai@gmail.com'),
+								(3,'Shravanthi','Pabboji','ABC Colony','Alwal','Telangana',520003,1234567892,'Shravanthi@gamil.com'),
+								(4,'Vishnu','vardhan','Kanuru','Vijayawada','Andhra Pradeshtra',520007,1234567893,'Vishnu@gmail.com');
+select *from PersonDetail1;
 
+
+---------Inserting values into persontype1 table--------------
+INSERT INTO PersonTypes1(PersonType) VALUES('Family'),('SchoolFriend'),('Friend'),('Profession');
+
+select *from PersonTypes1;
+
+-----------Insert values in PersonsDetail_Type1 table-------------
+INSERT INTO PersonsDetail_Type1(PersonId,PersonTypeId) VALUES(1,4),(2,3),(3,1),(4,2);
+select *from PersonsDetail_Type1;
+
+-----------Insert values in Employee_Department1 table-------------
+INSERT INTO Employee_Department1 VALUES(1,123,818),(2,456,19112),(3,789,4512),(4,244,161815)
+select *from Employee_Department1;
+
+
+-----------UC13-Ensuring All retrieve queries from UC6 to UC10 with new table---------
+-----------UC6-Retrieve Person belonging to city Or State-------------- -----------
+SELECT addressbook.AddressBookId,addressbook.AddressBookName,persondetail.PersonId,persondetail.FirstName,persondetail.LastName,persondetail.Address,persondetail.City,persondetail.State,persondetail.Zip,
+persondetail.PhoneNumber,persondetail.Email_ID,persontype.PersonType,persontype.PersonTypeId FROM
+Address_Book1 AS addressbook 
+INNER JOIN PersonDetail1 AS persondetail ON addressbook.AddressBookId = persondetail.AddressBookId AND (persondetail.City='Vijayawada' OR persondetail.State='Andhra Pradesh')
+INNER JOIN PersonsDetail_Type1 as persontypedetail On persontypedetail.PersonId = persondetail.PersonId
+INNER JOIN PersonTypes1 AS persontype ON persontype.PersonTypeId = persontypedetail.PersonTypeId;
+
+----------UC7-understand Size of AddressBook by city and state---------
+Select Count(*) As Count,State from PersonDetail1 Group By State;
+Select Count(*) As Count,City from PersonDetail1 Group By City;
+
+select Count(city) from PersonDetail1
+select * from PersonDetail1
+
+----------------UC8-Retrieve entries sorted alphabetically by person name---------------
+SELECT addressbook.AddressBookId,addressbook.AddressBookName,persondetail.PersonId,persondetail.FirstName,persondetail.LastName,persondetail.Address,persondetail.City,persondetail.State,persondetail.Zip,
+persondetail.PhoneNumber,persondetail.Email_Id,pt.PersonType,pt.PersonTypeId FROM
+Address_Book1 AS addressbook 
+INNER JOIN PersonDetail1 AS persondetail ON addressbook.AddressBookId = persondetail.AddressBookId 
+INNER JOIN PersonsDetail_Type1 as ptm On ptm.PersonId = persondetail.PersonId
+INNER JOIN PersonTypes1 AS pt ON pt.PersonTypeId = ptm.PersonTypeId Order By FirstName;
+
+---------------UC_9Retreive Number Of Persons Records Based On Person Types---------------
+Select Count(a.PersonTypeId) As PersonCount,b.PersonType From 
+PersonsDetail_Type1 As a 
+INNER JOIN PersonTypes1 AS b ON b.PersonTypeId = a.PersonTypeId
+INNER JOIN PersonDetail1 AS c ON c.PersonId = a.PersonId Group By a.PersonTypeId,b.PersonType;
+
+---------------UC_10_Retreive Number Of Persons Records Based On AddressBook Names----------
+Select Count(a.AddressBookId) As AddressBookCount,a.AddressBookName From 
+Address_Book1 As a 
+INNER JOIN PersonDetail1 AS pd ON pd.AddressBookId = a.AddressBookId Group By a.AddressBookName,pd.AddressBookId;
 						
 						
 						
